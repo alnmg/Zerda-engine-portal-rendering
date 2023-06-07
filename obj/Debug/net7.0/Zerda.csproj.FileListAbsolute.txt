@@ -1,0 +1,15 @@
+/home/miguel/Documentos/VSCode-Projects/Zerda/bin/Debug/net7.0/Zerda
+/home/miguel/Documentos/VSCode-Projects/Zerda/bin/Debug/net7.0/Zerda.deps.json
+/home/miguel/Documentos/VSCode-Projects/Zerda/bin/Debug/net7.0/Zerda.runtimeconfig.json
+/home/miguel/Documentos/VSCode-Projects/Zerda/bin/Debug/net7.0/Zerda.dll
+/home/miguel/Documentos/VSCode-Projects/Zerda/bin/Debug/net7.0/Zerda.pdb
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.csproj.AssemblyReference.cache
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.GeneratedMSBuildEditorConfig.editorconfig
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.AssemblyInfoInputs.cache
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.AssemblyInfo.cs
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.csproj.CoreCompileInputs.cache
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.dll
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/refint/Zerda.dll
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.pdb
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.genruntimeconfig.cache
+/home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/ref/Zerda.dll
