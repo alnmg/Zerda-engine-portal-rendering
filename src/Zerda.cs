@@ -88,9 +88,9 @@ public class Zerda
     public bool isRunning;
 
     public const float
-    eyeheight = 1.5f,
     hfov = (float)(75 * Math.PI / 180.0),
     vfov = .5f;
+    float teh = 1.5f, eyeheight = 1.5f;
     nint texture;
     uint[] pixels = new uint[wWidth * wheight];
     Sector[] map;
@@ -126,19 +126,19 @@ public class Zerda
             new Wall(12.5f, 7.5f, 10.0f, 10.0f, -1)
         });
         
-        Sector sector1 = new Sector(1, 0f, 4.0f, new Wall[] {
+        Sector sector1 = new Sector(1, -0.5f, 3.5f, new Wall[] {
             new Wall(25, 15, 25, 10, -1),
             new Wall(25, 10, 20, 10, -1),
-            new Wall(20, 15, 25, 15, 2),
+            new Wall(20, 15, 25, 15, -1),
             new Wall(20.0f, 10.0f, 20.0f, 15.0f, 0)
         
         });
-        Sector sector2 = new Sector(2, 0f, 4.0f, new Wall[] {
+        Sector sector2 = new Sector(2, 1f, 5.0f, new Wall[] {
             new Wall(17.5f, 17.5f, 12.5f, 17.5f, 0),
             new Wall(12.5f, 17.5f, 17, 22, -1),
              new Wall(22, 22, 25,15, -1),
              new Wall(17, 22, 22, 22, -1),
-             new Wall(25, 15,20, 15, 1),
+             new Wall(25, 15,20, 15, -1),
              new Wall(20.0f, 15.0f,17.5f, 17.5f, -1),
         
         });
@@ -247,6 +247,8 @@ public class Zerda
     Player p = new Player(new Vector2(15,15), new Vector2(0, -1));
     void Loop(uint dt){
        p.move(dt);
+        eyeheight = teh + map[p.LKSector].floor;
+
 
        //this sucks.. change that
        foreach(Sector s in map){
@@ -259,7 +261,7 @@ public class Zerda
     
 
     const int QUEUE_MAX = 64;
-    private const float ZNEAR = 0.00001f;  
+    private const float ZNEAR = 0.001f;  
     private const float ZFAR = 100.0f; 
 
     int[] Ytop = new int[wWidth], Ybot = new int[wWidth];
@@ -422,9 +424,9 @@ public class Zerda
             yf1  = (wheight / 2) + (int) (( zfloor - eyeheight) * sy1),
             yc1  = (wheight / 2) + (int) (( zceil  - eyeheight) * sy1),
             nyf0 = (wheight / 2) + (int) ((nsFloor - eyeheight) * sy0),
-            nyc0 = (wheight / 2) + (int) ((nsCeil  - eyeheight) * sy0),
-            nyf1 = (wheight / 2) + (int) ((nsFloor - eyeheight) * sy1),
-            nyc1 = (wheight / 2) + (int) ((nsCeil  - eyeheight) * sy1),
+                nyc0 = (wheight / 2) + (int) ((nsCeil  - eyeheight) * sy0),
+                nyf1 = (wheight / 2) + (int) ((nsFloor - eyeheight) * sy1),
+                nyc1 = (wheight / 2) + (int) ((nsCeil  - eyeheight) * sy1),
             txd = tx1 - tx0,
             yfd = yf1 - yf0,
             ycd = yc1 - yc0,
@@ -459,32 +461,32 @@ public class Zerda
 
             if(w.portal != -1){
                 int // calcula altura da "janela" do portal
-                 tnyf = (int)(xp * nyfd) + yf0,
-                 tnyc = (int)(xp * nycd) + yc0,
-                 nyf = Math.Clamp(tnyf, Ybot[x], Ytop[x]),
-                 nyc = Math.Clamp(tnyc, Ybot[x], Ytop[x]);
+                  tnyf = (int) (xp * nyfd) + nyf0,
+                        tnyc = (int) (xp * nycd) + nyc0,
+                        nyf = Math.Clamp(tnyf, Ybot[x], Ytop[x]),
+                        nyc = Math.Clamp(tnyc, Ybot[x], Ytop	[x]);
 
                   Verline(
                         x,
                         nyc,
                         yc,
-                        0xFF00FF00);
+                        0x101010ff);
 
                 Verline(
                         x,
                         yf,
                         nyf,
-                        0xFF0000FF);
+                        0x333333FF);
 
-                Ytop[x] = Math.Clamp(
-                Math.Min(Math.Min(yc, nyc), Ytop[x]),
-                0,
-                wheight - 1);
+                Ytop[x] =
+                        Math.Clamp(
+                            Math.Min(Math.Min(yc, nyc), Ytop[x]),
+                            0, wheight - 1);
 
-                Ybot[x] = Math.Clamp(
-                Math.Max(Math.Max(yf, nyf), Ybot[x]),
-                0,
-                wheight - 1);
+                    Ybot[x] =
+                        Math.Clamp(
+                            Math.Max(Math.Max(yf, nyf), Ybot[x]),
+                            0, wheight - 1);
             }else{
                 Verline(x, yf, yc, RGBAShade(0x4488ffff, shade));
             }
