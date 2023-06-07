@@ -461,22 +461,25 @@ public class Zerda
 
             if(w.portal != -1){
                 int // calcula altura da "janela" do portal
-                  tnyf = (int) (xp * nyfd) + nyf0,
-                        tnyc = (int) (xp * nycd) + nyc0,
-                        nyf = Math.Clamp(tnyf, Ybot[x], Ytop[x]),
-                        nyc = Math.Clamp(tnyc, Ybot[x], Ytop	[x]);
+                tnyf = (int) (xp * nyfd) + nyf0,
+                tnyc = (int) (xp * nycd) + nyc0;
+
+               
+                int
+                nyf = Math.Clamp(tnyf, Ybot[x], Ytop[x]),
+                nyc = Math.Clamp(tnyc, Ybot[x], Ytop[x]);
 
                   Verline(
                         x,
                         nyc,
                         yc,
-                        0x101010ff);
+                        0x080808ff);
 
                 Verline(
                         x,
                         yf,
                         nyf,
-                        0x333333FF);
+                        0x191919FF);
 
                 Ytop[x] =
                         Math.Clamp(
