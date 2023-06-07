@@ -1,15 +1,12 @@
-using System.Diagnostics;
-using System.Data;
-using System.Net.NetworkInformation;
-using System.Runtime.Intrinsics.X86;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System;
 using System.Numerics;
+using System.IO;
 using static SDL2.SDL;
+using static SDL2.SDL_ttf;
+
 
 public class Zerda
 {
+    
     struct Sector{
         public int id;
         public float floor, ceiling;
@@ -36,7 +33,7 @@ public class Zerda
         public Vector2 position;
         public Vector2 direction;
 
-        public int currentSector = 0;
+        public int LKSector = 0; // last know sector
 
         public Player(Vector2 position, Vector2 direction){
             this.position = position;
@@ -58,25 +55,25 @@ public class Zerda
             }
             if (IsKeyPressed(SDL_Keycode.SDLK_a))
             {
-                position -= new Vector2(direction.Y, -direction.X) * speed * deltaTime;
+                position += new Vector2(direction.Y, -direction.X) * speed * deltaTime;
             }
             if (IsKeyPressed(SDL_Keycode.SDLK_d))
             {
-                position += new Vector2(direction.Y, -direction.X) * speed * deltaTime;
+                position -= new Vector2(direction.Y, -direction.X) * speed * deltaTime;
             }
 
             if (IsKeyPressed(SDL_Keycode.SDLK_LEFT))
             {
-                float angle = +rotspeed * deltaTime;
+                float angle = -rotspeed * deltaTime;
                 direction = RotateVector(direction, angle);
             }
             if (IsKeyPressed(SDL_Keycode.SDLK_RIGHT))
             {
-                float angle = -rotspeed * deltaTime;
+                float angle = +rotspeed * deltaTime;
                 direction = RotateVector(direction, angle);
             }
         }
-
+    
         Vector2 RotateVector(Vector2 vector, float angle)
         {
             float cosAngle = (float)Math.Cos(angle);
@@ -98,11 +95,30 @@ public class Zerda
     uint[] pixels = new uint[wWidth * wheight];
     Sector[] map;
 
+    bool PointInSector(Sector sector, Vector2 p)
+    {
+        for (int i = 0; i < sector.walls.Length; i++)
+        {
+            Wall wall = sector.walls[i];
+
+            if (PointSide(p, wall.a, wall.b) > 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    int PointSide(Vector2 p, Vector2 a, Vector2 b)
+    {
+        return (int)((b.X - a.X) * (p.Y - a.Y) - (b.Y - a.Y) * (p.X - a.X));
+    }
     void initMap(){
         Sector sector0 = new Sector(0, 0.0f, 4.0f, new Wall[] {
             new Wall(10.0f, 10.0f, 10.0f, 15.0f, -1),
             new Wall(10.0f, 15.0f, 12.5f, 17.5f, -1),
-            new Wall(12.5f, 17.5f, 17.5f, 17.5f, -1),
+            new Wall(12.5f, 17.5f, 17.5f, 17.5f, 2),
             new Wall(17.5f, 17.5f, 20.0f, 15.0f, -1),
             new Wall(20.0f, 15.0f, 20.0f, 10.0f, 1),
             new Wall(20.0f, 10.0f, 17.5f, 7.5f, -1),
@@ -111,13 +127,22 @@ public class Zerda
         });
         
         Sector sector1 = new Sector(1, 0f, 4.0f, new Wall[] {
-            //new Wall(10.0f, 10.0f, 10.0f, 15.0f, 0),
             new Wall(25, 15, 25, 10, -1),
             new Wall(25, 10, 20, 10, -1),
-            new Wall(20, 15, 25, 15, -1),
+            new Wall(20, 15, 25, 15, 2),
+            new Wall(20.0f, 10.0f, 20.0f, 15.0f, 0)
         
         });
-        map = new Sector[] {sector0, sector1};
+        Sector sector2 = new Sector(2, 0f, 4.0f, new Wall[] {
+            new Wall(17.5f, 17.5f, 12.5f, 17.5f, 0),
+            new Wall(12.5f, 17.5f, 17, 22, -1),
+             new Wall(22, 22, 25,15, -1),
+             new Wall(17, 22, 22, 22, -1),
+             new Wall(25, 15,20, 15, 1),
+             new Wall(20.0f, 15.0f,17.5f, 17.5f, -1),
+        
+        });
+        map = new Sector[] {sector0, sector1, sector2};
     }
 
    
@@ -126,7 +151,7 @@ public class Zerda
         IntPtr pixelsPtr;
         int pitch;
         SDL_LockTexture(texture, IntPtr.Zero, out pixelsPtr, out pitch);
-
+        
         unsafe
         {
             uint* texturePixels = (uint*)pixelsPtr;
@@ -141,16 +166,34 @@ public class Zerda
         SDL_UnlockTexture(texture);
     }
     
+    SDL_Color white = new SDL_Color { r = 255, g = 255, b = 255, a = 255 };
 
+    nint font;
+    void drawtext(int x, int y, SDL_Color color, String text){
 
+        IntPtr TextSurface = TTF_RenderText_Solid(font, text, color);
+        IntPtr TextTexture = SDL_CreateTextureFromSurface(r, TextSurface);
+        int wtextrect, htextrect;
+        SDL_QueryTexture(TextTexture, out _, out _, out wtextrect, out htextrect);
+        SDL_Rect textRect = new SDL_Rect { x = x, y = y, w = wtextrect, h = htextrect }; // Defina a posição e o tamanho do texto na janela.
+        
+        SDL_RenderCopy(r, TextTexture, IntPtr.Zero, ref textRect);
+    }
 
     public Zerda(){
         initMap();
         SDL_Init(SDL_INIT_VIDEO);
+        
         w = SDL_CreateWindow("Zerda Engine - portal rendering", SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED, wWidth, wheight, SDL_WindowFlags.SDL_WINDOW_SHOWN);
         r = SDL_CreateRenderer(w, -1, SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
         texture = SDL_CreateTexture(r, SDL_PIXELFORMAT_RGBA8888, 1, wWidth, wheight);
-        
+
+  
+        TTF_Init();
+
+        font = TTF_OpenFont(Path.GetFullPath("./res/font.ttf"), 24);
+
+       
         isRunning = true;
         
         uint time = 0, oldtime;
@@ -163,7 +206,8 @@ public class Zerda
             Loop(time - oldtime);
 
             UpdateTexture(texture);
-            SDL_RenderCopy(r, texture, IntPtr.Zero, IntPtr.Zero);
+            SDL_RenderCopyEx(r, texture, IntPtr.Zero, IntPtr.Zero, 0.0, IntPtr.Zero, SDL_RendererFlip.SDL_FLIP_HORIZONTAL);
+            
             Render();
             SDL_RenderPresent(r);
 
@@ -171,7 +215,9 @@ public class Zerda
         SDL_DestroyTexture(texture);
         SDL_DestroyRenderer(r);
         SDL_DestroyWindow(w);
+        TTF_Quit();
         SDL_Quit();
+
 
     }
     SDL_Event e;
@@ -201,6 +247,14 @@ public class Zerda
     Player p = new Player(new Vector2(15,15), new Vector2(0, -1));
     void Loop(uint dt){
        p.move(dt);
+
+       //this sucks.. change that
+       foreach(Sector s in map){
+        if(PointInSector(s, p.position)){
+            p.LKSector = s.id;
+        }
+        
+       }
     }
     
 
@@ -220,7 +274,43 @@ public class Zerda
             public QueueEntry[] arr;
             public int n;
         };
+
+    const int SCALE_FACTOR = 3;
+    void drawMap(Wall w) {
+        SDL_SetRenderDrawColor(r, 255, 0, 255, 255);
+        if (w.portal != -1) SDL_SetRenderDrawColor(r, 0, 255, 255, 255);
+
+        int scaledAX = (int)(w.a.X * SCALE_FACTOR);
+        int scaledAY = (int)(w.a.Y * SCALE_FACTOR);
+        int scaledBX = (int)(w.b.X * SCALE_FACTOR);
+        int scaledBY = (int)(w.b.Y * SCALE_FACTOR);
+
+        SDL_RenderDrawLine(r, scaledAX, scaledAY, scaledBX, scaledBY);
+    }
     void Render(){
+        // draw debug
+        SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
+        int startX = (int)(p.position.X * SCALE_FACTOR);
+        int startY = (int)(p.position.Y * SCALE_FACTOR);
+        int endX = (int)((p.position.X + p.direction.X * 2) * SCALE_FACTOR);
+        int endY = (int)((p.position.Y + p.direction.Y * 2) * SCALE_FACTOR);
+
+        SDL_RenderDrawLine(r, startX, startY, endX, endY);
+        
+
+        drawtext(10,480, white, "is inside sector? :  " + (PointInSector(map[p.LKSector], p.position) ? "yes" : "no"));
+
+        drawtext(10,500, white, "last know sector :  "+p.LKSector);
+
+        drawtext(10,530, white, "Pos:");
+        drawtext(10,550, white, " X :  " + p.position.X);
+        drawtext(10,570, white, " Y :  " + p.position.Y);
+
+        drawtext(150,530, white, "Dir:");
+        drawtext(150,550, white, " X :  " + p.direction.X);
+        drawtext(150,570, white, " Y :  " + p.direction.Y);
+
+        //
         for (int i = 0; i < wWidth; i++) {
             Ytop[i] = wheight - 1;
             Ybot[i] = 0;
@@ -234,10 +324,7 @@ public class Zerda
          zfl = new Vector2(zdl.X * ZFAR, zdl.Y * ZFAR),
          zfr = new Vector2(zdr.X * ZFAR, zdr.Y * ZFAR);
 
-         SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
-         SDL_RenderDrawLine(r, (int)p.position.X, (int)p.position.Y, (int)(p.position.X + p.direction.X * 4), (int)(p.position.Y + p.direction.Y * 4));
-
-        
+    
         //portals to draw queue
         bool[] sectdraw = new bool[128];
         Array.Fill(sectdraw, false);
@@ -248,27 +335,24 @@ public class Zerda
             n = 1
         };
         
-        queue.arr[0] = new QueueEntry { id = p.currentSector, x0 = 0, x1 = wWidth - 1 };
+        queue.arr[0] = new QueueEntry { id = p.LKSector, x0 = 0, x1 = wWidth - 1 };
         
 
         while (queue.n != 0)
         {
             
-            QueueEntry entry = queue.arr[--queue.n];
-
-            if (sectdraw[entry.id])
-            {
-                continue;
-            }
-            sectdraw[entry.id] = true;
-            
+        QueueEntry entry = queue.arr[--queue.n];
+        if (sectdraw[entry.id])
+        {
+            continue;
+        }
+        sectdraw[entry.id] = true;
+        
         
 
         foreach (Wall w in map[entry.id].walls){
 
-        SDL_SetRenderDrawColor(r, 255, 0, 255, 255);
-        if(w.portal != -1) SDL_SetRenderDrawColor(r, 0, 255, 255, 255);
-        SDL_RenderDrawLine(r, (int)w.a.X, (int)w.a.Y, (int)w.b.X, (int)w.b.Y);
+       drawMap(w);
        
         Vector2
          op0 = worldtocam(w.a),

@@ -13,3 +13,33 @@
 /home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.pdb
 /home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/Zerda.genruntimeconfig.cache
 /home/miguel/Documentos/VSCode-Projects/Zerda/obj/Debug/net7.0/ref/Zerda.dll
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.exe
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.deps.json
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.runtimeconfig.json
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.dll
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.pdb
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.csproj.AssemblyReference.cache
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.AssemblyInfoInputs.cache
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.AssemblyInfo.cs
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.csproj.CoreCompileInputs.cache
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.dll
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\refint\Zerda.dll
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.pdb
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.genruntimeconfig.cache
+C:\Users\allan\Documents\Visual Studio Code\Zerda-engine-portal-rendering\obj\Debug\net7.0\ref\Zerda.dll
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.exe
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.deps.json
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.runtimeconfig.json
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.dll
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\bin\Debug\net7.0\Zerda.pdb
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.csproj.AssemblyReference.cache
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.AssemblyInfoInputs.cache
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.AssemblyInfo.cs
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.csproj.CoreCompileInputs.cache
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.dll
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\refint\Zerda.dll
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.pdb
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\Zerda.genruntimeconfig.cache
+C:\Users\allan\Documents\vsproj\Zerda-engine-portal-rendering\obj\Debug\net7.0\ref\Zerda.dll

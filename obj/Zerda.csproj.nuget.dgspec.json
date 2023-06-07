@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/miguel/Documentos/VSCode-Projects/Zerda/Zerda.csproj": {}
+    "C:\\Users\\allan\\Documents\\vsproj\\Zerda-engine-portal-rendering\\Zerda.csproj": {}
   },
   "projects": {
-    "/home/miguel/Documentos/VSCode-Projects/Zerda/Zerda.csproj": {
+    "C:\\Users\\allan\\Documents\\vsproj\\Zerda-engine-portal-rendering\\Zerda.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/miguel/Documentos/VSCode-Projects/Zerda/Zerda.csproj",
+        "projectUniqueName": "C:\\Users\\allan\\Documents\\vsproj\\Zerda-engine-portal-rendering\\Zerda.csproj",
         "projectName": "Zerda",
-        "projectPath": "/home/miguel/Documentos/VSCode-Projects/Zerda/Zerda.csproj",
-        "packagesPath": "/home/miguel/.nuget/packages/",
-        "outputPath": "/home/miguel/Documentos/VSCode-Projects/Zerda/obj/",
+        "projectPath": "C:\\Users\\allan\\Documents\\vsproj\\Zerda-engine-portal-rendering\\Zerda.csproj",
+        "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\allan\\Documents\\vsproj\\Zerda-engine-portal-rendering\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/miguel/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\allan\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
